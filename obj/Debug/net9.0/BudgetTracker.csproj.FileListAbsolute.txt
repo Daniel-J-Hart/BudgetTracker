@@ -15,3 +15,4 @@ C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\ref\BudgetTracker.dll
 C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.csproj.AssemblyReference.cache
 C:\visual studio projects\BudgetTracker\bin\Debug\net9.0\Newtonsoft.Json.dll
 C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTr.578BD9FB.Up2Date
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.sourcelink.json
