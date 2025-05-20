@@ -30,7 +30,7 @@ namespace BudgetTracker
 
             // Otherwise, read and deserialize the file into a dictionary
             string json = File.ReadAllText("transactions.json");
-            return JsonConvert.DeserializeObject<Dictionary<string, TransactionData>>(json)
+            return JsonConvert.DeserializeObject<Dictionary<string, TransactionData>>(json) // JsonConvert.DeserializeObject takes a JSON-formatted string, parses it, and Creates an instance of a C# class (or list, dictionary, etc.) filled with the data from that JSON
                 ?? new Dictionary<string, TransactionData>(); // Ensure a valid return even if the deserialization results in null
         }
 
