@@ -1,0 +1,17 @@
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.GeneratedMSBuildEditorConfig.editorconfig
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.AssemblyInfoInputs.cache
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.AssemblyInfo.cs
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.csproj.CoreCompileInputs.cache
+C:\visual studio projects\BudgetTracker\bin\Debug\net9.0\BudgetTracker.exe
+C:\visual studio projects\BudgetTracker\bin\Debug\net9.0\BudgetTracker.deps.json
+C:\visual studio projects\BudgetTracker\bin\Debug\net9.0\BudgetTracker.runtimeconfig.json
+C:\visual studio projects\BudgetTracker\bin\Debug\net9.0\BudgetTracker.dll
+C:\visual studio projects\BudgetTracker\bin\Debug\net9.0\BudgetTracker.pdb
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.dll
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\refint\BudgetTracker.dll
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.pdb
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.genruntimeconfig.cache
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\ref\BudgetTracker.dll
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTracker.csproj.AssemblyReference.cache
+C:\visual studio projects\BudgetTracker\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\visual studio projects\BudgetTracker\obj\Debug\net9.0\BudgetTr.578BD9FB.Up2Date

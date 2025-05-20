@@ -1,0 +1,28 @@
+{
+  "bethan": {
+    "Transactions": [
+      {
+        "Description": "1000",
+        "Amount": 1000.0
+      },
+      {
+        "Description": "test 23",
+        "Amount": 10000.0
+      }
+    ],
+    "Balance": 11000.0
+  },
+  "dan": {
+    "Transactions": [
+      {
+        "Description": "test",
+        "Amount": 1000.0
+      }
+    ],
+    "Balance": 1000.0
+  },
+  "daniel": {
+    "Transactions": [],
+    "Balance": 0.0
+  }
+}
