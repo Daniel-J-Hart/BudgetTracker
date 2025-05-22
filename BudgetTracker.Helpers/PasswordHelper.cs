@@ -3,6 +3,8 @@ using System.Security.Cryptography;
 
 namespace BudgetTracker.Helpers
 {
+    // other password hash option is SHA256
+    // pbkdf2 is built for hashing whereas sha256 is a general purpose hash
     public static class PasswordHelper
     {
         public static string HashPassword(string password)
