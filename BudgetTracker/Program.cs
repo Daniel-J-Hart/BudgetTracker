@@ -16,12 +16,17 @@ namespace BudgetTracker
 
     class Program
     {
+        // Paths to the JSON files for user credentials and transactions
         static string usersFile = "users.json";
         static string transactionsFile = "transactions.json";
+        // Dictionary to hold all users transaction data in memory
         static Dictionary<string, TransactionData> allUserData = LoadAllUserData();
+        // The currently logged in user
         static string currentUser = "";
+        // Shortcut to access the current user's data
         static TransactionData CurrentUserData => allUserData[currentUser];
 
+        // Load transaction data from JSON file for all users
         static Dictionary<string, TransactionData> LoadAllUserData()
         {
             // If the transactions.json file doesn't exist, return an empty dictionary
@@ -34,13 +39,14 @@ namespace BudgetTracker
                 ?? new Dictionary<string, TransactionData>(); // Ensure a valid return even if the deserialization results in null
         }
 
+        // Save all users transaction data to the JSON file
         static void SaveAllUserData()
         {
             string json = JsonConvert.SerializeObject(allUserData, Formatting.Indented);
             File.WriteAllText("transactions.json", json);
         }
 
-
+        // Gets the transaction file path for a specific user 
         static string GetTransactionFilePath(string username)
         {
             return $"transactions_{username}.json";
@@ -55,6 +61,7 @@ namespace BudgetTracker
 
             bool success = false;
 
+            // Decide between register or login
             if (option == "1")
             {
                 success = Register();
@@ -69,24 +76,29 @@ namespace BudgetTracker
                 return;
             }
 
+            // If login / register is successful. enter the main program
             if (success)
             {
                 MainProgram();
             }
         }
 
+        // Save user list (usernames + password hashes) to JSON file
         static void SaveUsers(List<User> users)
         {
             string json = JsonConvert.SerializeObject(users, Formatting.Indented);
             File.WriteAllText(usersFile, json);
         }
 
+        // Handles user registration 
         static bool Register()
         {
             Console.Write("Enter username: ");
             string username = Console.ReadLine();
 
             var users = LoadUsers();
+
+            // Checks if the username is taken
             if (users.Any(u => u.Username == username))
             {
                 Console.WriteLine("Username already exists.");
@@ -96,21 +108,24 @@ namespace BudgetTracker
             Console.Write("Enter password: ");
             string password = Console.ReadLine();
 
+            // Hash the password using PBKDF2 (safer than SHA256)
             string hash = PasswordHelper.HashPassword(password);
             users.Add(new User { Username = username, PasswordHash = hash });
 
             SaveUsers(users);
 
-            // set current user
+            // Set the current user
             currentUser = username;
 
-            // Add an entry for this user in the transaction dictionary
+            // Create an empty transaction data entry for the new user
             allUserData[currentUser] = new TransactionData();
             SaveAllUserData();
 
             Console.WriteLine("User registered successfully!");
             return true;
         }
+
+        // Handles user login logic
         static bool Login()
         {
             Console.Write("Enter username: ");
@@ -121,6 +136,7 @@ namespace BudgetTracker
             var users = LoadUsers();
             var user = users.FirstOrDefault(u => u.Username == username);
 
+            // Check username and password hash
             if (user == null || !PasswordHelper.VerifyPassword(password, user.PasswordHash))
             {
                 Console.WriteLine("Invalid username or password.");
@@ -142,15 +158,19 @@ namespace BudgetTracker
             }
         }
 
+        // Load list of users from JSON file
         static List<User> LoadUsers()
         {
             if (!File.Exists(usersFile)) return new List<User>();
             string json = File.ReadAllText(usersFile);
             return JsonConvert.DeserializeObject<List<User>>(json) ?? new List<User>();
         }
+
+        // Holds all current session transactions
         static List<Transaction> Transactions = new List<Transaction>();
         static decimal balance = 0;
 
+        // Main program loop after login
         static void MainProgram()
         {
             while (true)
@@ -165,6 +185,7 @@ namespace BudgetTracker
                 string choice = Console.ReadLine();
                 Console.WriteLine();
 
+                // Handle user menu choices
                 switch (choice)
                 {
                     case "1":
@@ -204,6 +225,7 @@ namespace BudgetTracker
             File.WriteAllText(path, json);
         }
 
+        // Adds a new transaction for the current user
         static void AddTransaction()
         {
             Console.Write("Enter description: ");
@@ -212,9 +234,11 @@ namespace BudgetTracker
             Console.Write("Enter amount (positive for income, negative for expense): ");
             if (decimal.TryParse(Console.ReadLine(), out decimal amount))
             {
+                // Add transaction and update balance
                 CurrentUserData.Transactions.Add(new Models.Transaction { Description = desc, Amount = amount });
                 CurrentUserData.Balance += amount;
 
+                // Save updated data
                 SaveAllUserData();
 
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -229,6 +253,7 @@ namespace BudgetTracker
             }
         }
 
+        // Display current user's balance
         static void ShowBalance()
         {
             var balance = CurrentUserData.Balance;
@@ -242,6 +267,7 @@ namespace BudgetTracker
             Console.ResetColor();
         }
 
+        // Display all current user's transactions
         static void ShowTransactions()
         {
             Console.WriteLine("Transactions:");
