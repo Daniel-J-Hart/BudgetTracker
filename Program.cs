@@ -10,7 +10,7 @@ namespace BudgetTracker
 {
     class Transaction
     {
-        public string Description { get; set; }
+        public required string Description { get; set; }
         public decimal Amount { get; set; }
     }
 
@@ -18,7 +18,7 @@ namespace BudgetTracker
     {
         // Paths to the JSON files for user credentials and transactions
         static string usersFile = "users.json";
-        static string transactionsFile = "transactions.json";
+    
         // Dictionary to hold all users transaction data in memory
         static Dictionary<string, TransactionData> allUserData = LoadAllUserData();
         // The currently logged in user
@@ -57,7 +57,13 @@ namespace BudgetTracker
             Console.WriteLine("Welcome to Budget Tracker Authentication.");
             Console.WriteLine("1. Register\n2. Login");
             Console.Write("Choose option: ");
-            string option = Console.ReadLine();
+            string? option = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(option))
+            {
+                Console.WriteLine("No input detected. Exiting program.");
+                return;
+            }
 
             bool success = false;
 
@@ -94,7 +100,14 @@ namespace BudgetTracker
         static bool Register()
         {
             Console.Write("Enter username: ");
-            string username = Console.ReadLine();
+            string? username = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(username))
+            {
+                Console.WriteLine("Username cannot be empty.");
+                return false;
+                // Handle invalid input, e.g., ask again or exit
+            }
 
             var users = LoadUsers();
 
@@ -106,10 +119,16 @@ namespace BudgetTracker
             }
 
             Console.Write("Enter password: ");
-            string password = Console.ReadLine();
+            string? password = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(password))
+            {
+                Console.WriteLine("Password cannot be empty.");
+                return false;
+            }
 
             // Hash the password using PBKDF2 (safer than SHA256)
-            string hash = PasswordHelper.HashPassword(password);
+                string hash = PasswordHelper.HashPassword(password);
             users.Add(new User { Username = username, PasswordHash = hash });
 
             SaveUsers(users);
@@ -129,9 +148,22 @@ namespace BudgetTracker
         static bool Login()
         {
             Console.Write("Enter username: ");
-            string username = Console.ReadLine();
+            string? username = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(username))
+            {
+                Console.WriteLine("Username cannot be empty.");
+                return false;  
+            }
+
             Console.Write("Enter password: ");
-            string password = Console.ReadLine();
+            string? password = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(password))
+            {
+                Console.WriteLine("Username cannot be empty.");
+                return false;
+            }
 
             var users = LoadUsers();
             var user = users.FirstOrDefault(u => u.Username == username);
@@ -168,7 +200,6 @@ namespace BudgetTracker
 
         // Holds all current session transactions
         static List<Transaction> Transactions = new List<Transaction>();
-        static decimal balance = 0;
 
         // Main program loop after login
         static void MainProgram()
@@ -182,7 +213,12 @@ namespace BudgetTracker
                 Console.WriteLine("4. Exit");
                 Console.Write("Choose an option: ");
 
-                string choice = Console.ReadLine();
+                string? choice = Console.ReadLine();
+                if (string.IsNullOrEmpty(choice))
+                {
+                    Console.WriteLine("No input recieved.");
+                    Environment.Exit(0);
+                }
                 Console.WriteLine();
 
                 // Handle user menu choices
@@ -229,13 +265,13 @@ namespace BudgetTracker
         static void AddTransaction()
         {
             Console.Write("Enter description: ");
-            string desc = Console.ReadLine();
+            string? desc = Console.ReadLine();
 
             Console.Write("Enter amount (positive for income, negative for expense): ");
             if (decimal.TryParse(Console.ReadLine(), out decimal amount))
             {
                 // Add transaction and update balance
-                CurrentUserData.Transactions.Add(new Models.Transaction { Description = desc, Amount = amount });
+                CurrentUserData.Transactions.Add(new Models.Transaction { Description = desc ?? "", Amount = amount });
                 CurrentUserData.Balance += amount;
 
                 // Save updated data

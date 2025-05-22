@@ -4,7 +4,7 @@ namespace BudgetTracker.Models
     public class Transaction
     {
         // A short description of the transaction (e.g., "Salary", "Groceries")
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
         // The amount of the transaction (positive for income, negative for expenses)
         public decimal Amount { get; set; }
